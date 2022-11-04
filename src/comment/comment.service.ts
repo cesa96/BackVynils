@@ -22,7 +22,7 @@ export class CommentService {
     ) { }
 
     async findCommentsByAlbumId(albumId: number): Promise<CommentDTO[]> {
-        const album = await this.albumRepository.findOne(albumId, { relations: ["comments"] });
+        const album = await this.albumRepository.findOne(albumId, { relations: ["comments", "comments.collector"] });
         if (!album)
             throw new BusinessLogicException("The album with the given id was not found", BusinessError.NOT_FOUND)
 
@@ -30,7 +30,7 @@ export class CommentService {
     }
 
     async findCommentsByAlbumIdCommentId(albumId: number, commentId: number): Promise<CommentDTO> {
-        const album = await this.albumRepository.findOne(albumId, { relations: ["comments"] });
+        const album = await this.albumRepository.findOne(albumId, { relations: ["comments", "comments.collector"] });
         if (!album)
             throw new BusinessLogicException("The album with the given id was not found", BusinessError.NOT_FOUND)
 
